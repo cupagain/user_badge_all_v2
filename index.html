@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>帳號徽章更換 | SWAG Premium</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #04060a;
+            --glass-deep: rgba(15, 23, 42, 0.95);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --gold: #fbbf24;
+            --pink: #ff2d55;
+            --ice-blue: #38bdf8;
+            --font-head: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --text-dim: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--bg); color: #fff; font-family: var(--font-body);
+            background-image: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.08) 0%, transparent 50%);
+            min-height: 100vh; padding-bottom: 60px; overflow-x: hidden;
+        }
+
+        /* 1. 閃耀標題 */
+        .header-area { text-align: center; padding: 80px 20px 30px; }
+        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+        .main-title { 
+            font-family: var(--font-head); font-size: 32px; font-weight: 900; letter-spacing: -1px; margin-bottom: 20px;
+            background: linear-gradient(90deg, #fff 0%, #94a3b8 25%, #fff 50%, #94a3b8 75%, #fff 100%);
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite; white-space: nowrap;
+        }
+        .stats-block {
+            display: inline-flex; align-items: center; gap: 12px; padding: 10px 24px; border-radius: 100px;
+            background: #1e293b; border: 2px solid var(--ice-blue); box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+        .stats-label { color: var(--ice-blue); font-size: 13px; font-weight: 800; text-transform: uppercase; }
+        .stats-val { color: #fff; font-size: 24px; font-weight: 900; font-family: var(--font-head); }
+
+        /* 2. 身上徽章顯示區 (New) */
+        .equipped-section { max-width: 600px; margin: 0 auto 30px; padding: 0 16px; }
+        .equipped-title { font-size: 12px; font-weight: 800; color: var(--ice-blue); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; text-align: center; }
+        .equipped-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .equipped-box {
+            background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 20px;
+            padding: 15px; display: flex; flex-direction: column; align-items: center; text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .equipped-box img { width: 50px; height: 50px; margin-bottom: 8px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
+        .equipped-box span { font-size: 12px; font-weight: 600; color: var(--text-dim); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+        .slot-label { font-size: 10px; font-weight: 800; color: rgba(255,255,255,0.3); margin-bottom: 4px; text-transform: uppercase; }
+
+        /* 3. 身份卡片 */
+        .control-section { max-width: 600px; margin: 0 auto 30px; padding: 0 16px; }
+        .auth-card { 
+            background: var(--glass-deep); border: 1px solid var(--glass-border); border-radius: 28px; 
+            padding: 24px; backdrop-filter: blur(30px); box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+        .auth-card.vip-active { border-color: rgba(251, 191, 36, 0.4); }
+        .card-header { border-bottom: 1px solid var(--glass-border); padding-bottom: 18px; margin-bottom: 22px; }
+        .feat-title { font-family: var(--font-head); font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px; display: block; }
+        .vip-desc-line { font-size: 13.5px; color: #cbd5e1; font-weight: 600; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+        .lvl-box { border: 1px solid var(--gold); padding: 0 8px; border-radius: 4px; color: var(--gold); font-family: var(--font-head); font-weight: 800; }
+
+        .info-stack { display: flex; flex-direction: column; gap: 16px; }
+        .info-row-primary { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 800; color: #fff; height: 34px; }
+        .val-lvl-plain { font-family: var(--font-head); font-size: 28px; color: var(--gold); line-height: 1; }
+        .info-row-secondary { display: flex; align-items: center; gap: 12px; }
+        .val-status { font-size: 17px; font-weight: 800; color: #64748b; line-height: 1; }
+        .val-status.unlocked { color: var(--gold); }
+        .upgrade-cta-inline { 
+            background: linear-gradient(135deg, var(--pink) 0%, #ff5e7e 100%);
+            color: #fff; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 6px;
+            text-decoration: none; display: none; box-shadow: 0 4px 10px rgba(244, 63, 94, 0.3);
+        }
+
+        /* 4. 指引與網格 */
+        .instruction-area { text-align: center; margin-bottom: 25px; min-height: 52px; padding: 0 20px; }
+        .hint-label { font-size: 12px; font-weight: 700; color: #94a3b8; display: block; margin-bottom: 6px; text-transform: uppercase; }
+        .hint-value { font-size: 17px; font-weight: 800; color: #fff; }
+        .hint-selected { color: var(--ice-blue); }
+
+        .badge-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 0 16px 40px; max-width: 1000px; margin: 0 auto; }
+        @media (min-width: 768px) { .badge-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); } }
+
+        .badge-item { 
+            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 28px; 
+            padding: 30px 10px; text-align: center; cursor: pointer; position: relative; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; align-items: center; height: 100%;
+        }
+        .badge-item.selected { border-color: var(--gold); background: rgba(251, 191, 36, 0.12); transform: scale(1.02); }
+        
+        .badge-img { width: 80px; height: 80px; margin-bottom: 15px; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.3)); pointer-events: none; }
+        .badge-name { font-size: 15px; font-weight: 700; color: #f1f5f9; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-all; pointer-events: none; margin-bottom: 10px; }
+
+        .inline-confirm-btn {
+            background: var(--gold); color: #000; border: none; padding: 10px 0; width: 90%;
+            border-radius: 12px; font-family: var(--font-head); font-size: 14px; font-weight: 900;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+            animation: fadeIn 0.3s ease forwards;
+        }
+        .inline-confirm-btn.submitting { opacity: 0.7; cursor: wait; filter: grayscale(0.5); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 5. 注意事項 */
+        .footer { max-width: 600px; margin: 60px auto 0; padding: 30px 20px 80px; border-top: 1px solid var(--glass-border); }
+        .notice-list { list-style: none; padding: 0; }
+        .notice-item { font-size: 13.5px; color: #64748b; font-weight: 600; line-height: 1.8; margin-bottom: 12px; display: flex; gap: 12px; text-align: left; align-items: flex-start; }
+        .notice-item::before { content: "•"; color: #64748b; font-weight: 900; font-size: 18px; line-height: 1.2; flex-shrink: 0; margin-top: 3px; }
+        .notice-alert { color: var(--pink) !important; font-weight: 800 !important; }
+
+        .top-nav { position: absolute; top: 15px; right: 15px; z-index: 100; display: flex; gap: 6px; }
+        .lang-btn { background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); color: #94a3b8; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
+        .lang-btn.active { background: #fff; color: #000; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: 0.3s; }
+        .modal-overlay.show { display: flex; opacity: 1; }
+        .modal-content { background: #111827; border: 1px solid var(--glass-border); border-radius: 24px; padding: 40px 30px; width: 100%; max-width: 320px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .modal-text { font-size: 17px; font-weight: 600; line-height: 1.6; margin-bottom: 25px; color: #fff; }
+        .modal-btn { background: var(--gold); color: #000; border: none; padding: 12px 0; width: 100%; border-radius: 12px; font-weight: 800; font-size: 16px; cursor: pointer; }
+
+        .skeleton { background: linear-gradient(90deg, #0a0c10 25%, #1a1c22 50%, #0a0c10 75%); background-size: 200% 100%; animation: load 1.5s infinite linear; border-radius: 20px; }
+        @keyframes load { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <button class="lang-btn active" id="btn-zh-hant" onclick="setLang('zh-hant')">繁中</button>
+        <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+    </nav>
+
+    <header class="header-area">
+        <h1 class="main-title" id="ui-title">我的榮耀徽章全覽</h1>
+        <div class="stats-block">
+            <span class="stats-label" id="lbl-total">徽章總數</span>
+            <span class="stats-val" id="ui-count">--</span>
+        </div>
+    </header>
+
+    <!-- 目前身上徽章區域 (New Section) -->
+    <section class="equipped-section" id="equipped-area" style="display: none;">
+        <p class="equipped-title" id="lbl-equipped">目前身上徽章</p>
+        <div class="equipped-grid">
+            <div class="equipped-box" id="eq-box-1">
+                <div class="slot-label" id="lbl-slot-1">倒數第二個</div>
+                <img src="" id="eq-img-1">
+                <span id="eq-name-1">--</span>
+            </div>
+            <div class="equipped-box" id="eq-box-2">
+                <div class="slot-label" id="lbl-slot-2">最後一個</div>
+                <img src="" id="eq-img-2">
+                <span id="eq-name-2">--</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="control-section">
+        <div class="auth-card" id="status-card">
+            <div class="card-header">
+                <span class="feat-title" id="ui-feat-h">帳號徽章更換</span>
+                <div class="vip-desc-line">
+                    <span id="ui-vip-pre">等級至</span>
+                    <span class="lvl-box">VIP Level 60</span>
+                    <span id="ui-vip-suf">可解鎖徽章更換</span>
+                </div>
+            </div>
+            <div class="info-stack">
+                <div class="info-row-primary">
+                    <span id="lbl-my-lvl">我的 VIP 等級：</span>
+                    <span class="val-lvl-plain" id="ui-level">--</span>
+                </div>
+                <div class="info-row-secondary">
+                    <div class="val-status" id="ui-auth-status">未達標</div>
+                    <a href="https://swag.live/settings/vvip" target="_blank" class="upgrade-cta-inline" id="ui-upgrade">立即升級</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="instruction-area" id="ui-instruction" style="display: none;">
+        <span class="hint-label" id="ui-hint-label">請選取下方想更換徽章</span>
+        <span class="hint-value" id="ui-hint-value">---</span>
+    </div>
+
+    <main class="badge-grid" id="display"></main>
+
+    <footer class="footer">
+        <ul class="notice-list">
+            <li class="notice-item" id="ui-n1">本頁面呈現您的帳號所有徽章</li>
+            <li class="notice-item" id="ui-n2">帳號等級達到 VIP Level 60 可解鎖徽章更換</li>
+            <li class="notice-item" id="ui-n3">每次更換需等約 20 秒，請勿頻繁送出需求</li>
+            <li class="notice-item" id="ui-n4">徽章更換完成，可至直播間查看</li>
+            <li class="notice-item" id="ui-n5">徽章與等級需登入後完整顯示</li>
+            <li class="notice-item" id="ui-n6">資料至少需 10 分鐘更新時間</li>
+            <li class="notice-item notice-alert" id="ui-n7">【重要】為了保護您的帳號，切勿將徽章介面分享給他人，以免造成帳號冒用或徽章損失。</li>
+        </ul>
+    </footer>
+
+    <div class="modal-overlay" id="custom-modal">
+        <div class="modal-content">
+            <div class="modal-text" id="modal-msg"></div>
+            <button class="modal-btn" id="ui-modal-btn" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        const CFG = {
+            data: 'https://swag-user-info-api-905468082258.asia-east1.run.app/api/badges', // 已更換新 API
+            handler: 'https://swag-request-handler-v3-905468082258.asia-east1.run.app/api/request',
+            img: 'https://public.swag.live/badges/',
+            trs: 'https://api.swag.live/translations'
+        };
+
+        const I18N = {
+            'zh-hant': { 
+                title:"我的榮耀徽章全覽", total:"徽章總數", my_lvl:"我的 VIP 等級：", btn:"確認上架", upgrade: "立即升級", 
+                feat_h:"帳號徽章更換", vip_pre: "等級至", vip_suf: "可解鎖徽章更換", lock:"未達標", ok:"符合資格", 
+                hint_sel:"請選取下方想更換徽章", hint_ready:"已選取", equipped: "目前身上徽章", slot_1: "倒數第二個", slot_2: "最後一個",
+                n1:"本頁面呈現您的帳號所有徽章", n2:"帳號等級達到 VIP Level 60 可解鎖徽章更換", n3:"每次更換需等約 20 秒，請勿頻繁送出需求", 
+                n4:"徽章更換完成，可至直播間查看", n5:"徽章與等級需登入後完整顯示", n6:"資料至少需 10 分鐘更新時間", 
+                n7:"【重要】為了保護您的帳號，切勿將徽章介面分享給他人，以免造成帳號冒用或徽章損失。", 
+                empty: "暫無可選徽章", login: "請登入後查看徽章", success: "✅ 送出成功", cooldown: "⏳ 請等待至少 20 秒再送出請求", modal_btn: "確定", sending: "處理中..." 
+            },
+            'en': { 
+                title:"Glory Badge Gallery", total:"Total", my_lvl:"My VIP Level: ", btn:"Confirm", upgrade: "Upgrade", 
+                feat_h:"Badge Swap", vip_pre: "Reach", vip_suf: "to unlock swap", lock:"Ineligible", ok:"Qualified", 
+                hint_sel:"Select a badge below", hint_ready:"Selected", equipped: "Currently Equipped", slot_1: "2nd to Last", slot_2: "Last One",
+                n1:"This page shows all your badges", n2:"Reach VIP Level 60 to unlock swapping", n3:"Wait 20s between requests. Do not spam.", 
+                n4:"Check room after completion.", n5:"Login required for full display", n6:"Allow 10 mins for data updates", 
+                n7:"[Important] Do not share this interface with others to avoid account misuse.", 
+                empty: "No badges available", login: "Please login", success: "✅ Success", cooldown: "⏳ Please wait 20s", modal_btn: "OK", sending: "Processing..." 
+            }
+        };
+
+        let state = { lang:'zh-hant', level:0, selected:null, list:[], isSubmitting: false };
+        
+        const getCleanUserId = () => {
+            const getFromUrl = (url) => {
+                if (!url) return null;
+                const decoded = decodeURIComponent(url);
+                const match = decoded.match(/[?&](user_id|uid|userId)=([a-zA-Z0-9]{24,48})/i);
+                return match ? match[2] : null;
+            };
+            let rawId = getFromUrl(window.location.href) || getFromUrl(document.referrer);
+            if (!rawId) {
+                const params = new URLSearchParams(window.location.search);
+                const sourceParam = params.get('source');
+                if (sourceParam) rawId = getFromUrl(sourceParam);
+            }
+            if (!rawId) return null;
+            if (rawId.length >= 48) return rawId.substring(12, rawId.length - 12);
+            return rawId;
+        };
+        const uid = getCleanUserId();
+
+        function showModal(msg) { document.getElementById('modal-msg').innerText = msg; document.getElementById('custom-modal').classList.add('show'); }
+        function closeModal() { document.getElementById('custom-modal').classList.remove('show'); }
+
+        function setLang(l) {
+            state.lang = l;
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.id === `btn-${l}`));
+            updateUIStrings();
+            if(uid) init();
+        }
+
+        function updateUIStrings() {
+            const t = I18N[state.lang];
+            document.getElementById('lbl-equipped').innerText = t.equipped;
+            document.getElementById('lbl-slot-1').innerText = t.slot_1;
+            document.getElementById('lbl-slot-2').innerText = t.slot_2;
+            document.getElementById('lbl-my-lvl').innerText = t.my_lvl;
+            document.getElementById('ui-upgrade').innerText = t.upgrade;
+            document.getElementById('lbl-total').innerText = t.total;
+            document.getElementById('ui-title').innerText = t.title;
+        }
+
+        async function init() {
+            const box = document.getElementById('display');
+            if(!uid) { box.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:100px;color:#444">Please Login</div>`; return; }
+            box.innerHTML = Array(4).fill(0).map(()=>`<div class="badge-item"><div class="badge-img skeleton"></div><div class="skeleton" style="height:16px;width:60%"></div></div>`).join('');
+            try {
+                const r = await fetch(`${CFG.data}?user_id=${uid}`);
+                const d = await r.json();
+                state.level = d.level;
+                document.getElementById('ui-count').innerText = d.count;
+                document.getElementById('ui-level').innerText = d.level;
+
+                // 排序並過濾
+                const ids = (d.badges || []).filter(i => i.startsWith('campaign_')).sort((a,b)=>a.localeCompare(b, undefined, {numeric: true}));
+                
+                state.list = await Promise.all(ids.map(async id => {
+                    const k = `badge_${id}`;
+                    try {
+                        const t = await fetch(`${CFG.trs}?lang=${state.lang}&key=${k}`).then(res => res.json());
+                        return { id, name: t[k] || id };
+                    } catch { return { id, name: id }; }
+                }));
+
+                // 處理身上徽章邏輯 (最後兩個)
+                if (state.list.length > 0) {
+                    document.getElementById('equipped-area').style.display = 'block';
+                    const last = state.list[state.list.length - 1];
+                    const secondLast = state.list.length > 1 ? state.list[state.list.length - 2] : null;
+                    
+                    // 最後一個 (右邊)
+                    document.getElementById('eq-img-2').src = CFG.img + last.id + ".svg";
+                    document.getElementById('eq-name-2').innerText = last.name;
+                    
+                    // 倒數第二個 (左邊)
+                    if (secondLast) {
+                        document.getElementById('eq-box-1').style.visibility = 'visible';
+                        document.getElementById('eq-img-1').src = CFG.img + secondLast.id + ".svg";
+                        document.getElementById('eq-name-1').innerText = secondLast.name;
+                    } else {
+                        document.getElementById('eq-box-1').style.visibility = 'hidden';
+                    }
+                }
+
+                if (state.list.length === 0) box.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px;color:#64748b;">${I18N[state.lang].empty}</div>`;
+                else render();
+                check();
+            } catch (e) { box.innerHTML = "Error Loading Data"; console.log(e); }
+        }
+
+        function render() {
+            const t = I18N[state.lang];
+            document.getElementById('display').innerHTML = state.list.map(b => {
+                const isSelected = state.selected?.id === b.id;
+                const btnHtml = (state.level >= 60 && isSelected) ? 
+                    `<button class="inline-confirm-btn ${state.isSubmitting ? 'submitting' : ''}" 
+                             onclick="sendReq(event)">${state.isSubmitting ? t.sending : t.btn}</button>` : '';
+
+                return `
+                    <div class="badge-item ${isSelected ? 'selected' : ''}" onclick="toggleSelect('${b.id}')">
+                        <img class="badge-img" src="${CFG.img}${b.id}.svg" onerror="this.src='${CFG.img}default.svg'">
+                        <span class="badge-name">${b.name}</span>
+                        ${btnHtml}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleSelect(id) {
+            if (state.isSubmitting) return;
+            const badge = state.list.find(b => b.id === id);
+            state.selected = (state.selected && state.selected.id === id) ? null : badge;
+            render(); check();
+        }
+
+        function check() {
+            const t = I18N[state.lang];
+            const card = document.getElementById('status-card');
+            const authStatus = document.getElementById('ui-auth-status');
+            const upgradeBtn = document.getElementById('ui-upgrade');
+            const instArea = document.getElementById('ui-instruction');
+            const hintLbl = document.getElementById('ui-hint-label');
+            const hintVal = document.getElementById('ui-hint-value');
+
+            document.getElementById('ui-feat-h').innerText = t.feat_h;
+            document.getElementById('ui-vip-pre').innerText = t.vip_pre;
+            document.getElementById('ui-vip-suf').innerText = t.vip_suf;
+            document.getElementById('ui-n1').innerText = t.n1;
+            document.getElementById('ui-n2').innerText = t.n2;
+            document.getElementById('ui-n3').innerText = t.n3;
+            document.getElementById('ui-n4').innerText = t.n4;
+            document.getElementById('ui-n5').innerText = t.n5;
+            document.getElementById('ui-n6').innerText = t.n6;
+            document.getElementById('ui-n7').innerText = t.n7;
+            document.getElementById('ui-modal-btn').innerText = t.modal_btn;
+
+            if(state.level >= 60) {
+                card.classList.add('vip-active');
+                authStatus.innerText = t.ok;
+                authStatus.className = "val-status unlocked";
+                upgradeBtn.style.display = "none";
+                instArea.style.display = "block";
+                if(state.selected) {
+                    hintLbl.innerText = t.hint_ready;
+                    hintVal.innerText = state.selected.name;
+                    hintVal.className = "hint-value hint-selected";
+                } else {
+                    hintLbl.innerText = t.hint_sel;
+                    hintVal.innerText = "---";
+                    hintVal.className = "hint-value";
+                }
+            } else {
+                card.classList.remove('vip-active');
+                authStatus.innerText = t.lock;
+                authStatus.className = "val-status";
+                upgradeBtn.style.display = "inline-block";
+                instArea.style.display = "none"; 
+            }
+        }
+
+        async function sendReq(e) {
+            if (e) e.stopPropagation();
+            if (state.isSubmitting || !state.selected) return;
+
+            const t = I18N[state.lang];
+            state.isSubmitting = true;
+            render();
+
+            try {
+                const res = await fetch(CFG.handler, {
+                    method:'POST', headers:{'Content-Type':'application/json'},
+                    body: JSON.stringify({ user_id: uid, badge_id: state.selected.id })
+                });
+                const d = await res.json();
+                if (res.ok) {
+                    showModal(t.success);
+                    state.selected = null;
+                    setTimeout(() => init(), 1000);
+                }
+                else if (res.status === 429) showModal(t.cooldown);
+                else showModal(`❌: ${d.error || "Denied"}`);
+            } catch (err) {
+                showModal("❌ 伺服器連線失敗 (Network Error)");
+            } finally {
+                state.isSubmitting = false;
+                render();
+                check();
+            }
+        }
+        setLang('zh-hant');
+    </script>
+</body>
+</html>

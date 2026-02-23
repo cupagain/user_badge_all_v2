@@ -28,7 +28,7 @@
             min-height: 100vh; padding-bottom: 60px; overflow-x: hidden;
         }
 
-        /* 語言切換 (移除 JP) */
+        /* 語言切換 */
         .top-nav { position: absolute; top: 15px; right: 15px; z-index: 100; display: flex; gap: 6px; }
         .lang-btn { background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); color: var(--text-dim); padding: 8px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
         .lang-btn.active { background: #fff; color: #000; border-color: #fff; }
@@ -52,18 +52,27 @@
         .stats-label { color: var(--ice-blue); font-size: 12px; font-weight: 800; text-transform: uppercase; }
         .stats-val { color: #fff; font-size: 22px; font-weight: 900; font-family: var(--font-head); }
 
-        /* 2. 帳號顯示徽章 */
+        /* 2. 帳號顯示徽章 (已優化置中佈局) */
         .equipped-section { max-width: 1000px; margin: 0 auto 15px; padding: 0 16px; }
         .equipped-title { font-size: 12px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; text-align: center; }
-        .equipped-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; justify-content: center; }
+        
+        .equipped-grid { 
+            display: flex; 
+            justify-content: center; /* 關鍵：讓 1 個或 2 個都置中 */
+            gap: 14px; 
+            flex-wrap: wrap;
+        }
         .equipped-box {
             background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 28px;
-            padding: 25px 10px 10px; /* 緊湊底部 */
+            padding: 30px 10px 10px;
             display: flex; flex-direction: column; align-items: center; text-align: center;
             backdrop-filter: blur(10px); transition: 0.3s;
+            /* 寬度設定與下方全覽一致 */
+            width: calc(50% - 7px);
+            max-width: 180px; 
         }
         .equipped-box img { width: 75px; height: 75px; margin-bottom: 10px; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6)); }
-        .equipped-box span { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.2; height: 32px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .equipped-box span { font-size: 14px; font-weight: 700; color: #f1f5f9; line-height: 1.4; height: 32px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 
         /* 3. 身份與權限卡片 */
         .control-section { max-width: 600px; margin: 0 auto 15px; padding: 0 16px; }
@@ -91,7 +100,7 @@
             white-space: nowrap;
         }
 
-        /* 4. 徽章網格 - 電腦版置中優化 */
+        /* 4. 徽章全覽區 */
         .instruction-area { text-align: center; margin-bottom: 15px; min-height: 48px; padding: 0 20px; }
         .hint-label { font-size: 11px; font-weight: 700; color: #94a3b8; display: block; margin-bottom: 4px; text-transform: uppercase; }
         .hint-value { font-size: 16px; font-weight: 800; color: #fff; }
@@ -104,11 +113,10 @@
             padding: 0 16px 30px; 
             max-width: 1000px; 
             margin: 0 auto;
-            justify-content: center; /* 網格內容整體置中 */
+            justify-content: center;
         }
         @media (min-width: 768px) { 
             .badge-grid { 
-                /* 電腦版：使用 auto-fit 配合固定寬度，達成少數項目時也能置中的效果 */
                 grid-template-columns: repeat(auto-fit, 180px); 
                 justify-content: center;
             } 
@@ -116,12 +124,12 @@
 
         .badge-item { 
             background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 28px; 
-            padding: 30px 10px 10px; /* 緊湊底部 */
+            padding: 30px 10px 10px; 
             text-align: center; cursor: pointer; position: relative; transition: 0.4s;
             display: flex; flex-direction: column; align-items: center; height: 100%;
         }
         .badge-item.selected { border-color: var(--gold); background: rgba(251, 191, 36, 0.12); transform: scale(1.02); }
-        .badge-item.selected::after { content: '✓'; position: absolute; top: 12px; right: 15px; color: var(--gold); font-weight: 900; }
+        .badge-item.selected::after { content: '✓'; position: absolute; top: 12px; right: 15px; color: var(--gold); font-weight: 900; font-size: 18px; }
         
         .badge-img { width: 75px; height: 75px; margin-bottom: 12px; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.3)); pointer-events: none; }
         .badge-name { font-size: 14px; font-weight: 700; color: #f1f5f9; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-all; pointer-events: none; margin-bottom: 5px; }
@@ -169,17 +177,11 @@
         </div>
     </header>
 
+    <!-- 帳號顯示徽章區域 -->
     <section class="equipped-section" id="equipped-area" style="display: none;">
         <p class="equipped-title" id="lbl-equipped">帳號顯示徽章</p>
-        <div class="equipped-grid">
-            <div class="equipped-box" id="eq-box-1">
-                <img src="" id="eq-img-1">
-                <span id="eq-name-1">--</span>
-            </div>
-            <div class="equipped-box" id="eq-box-2">
-                <img src="" id="eq-img-2">
-                <span id="eq-name-2">--</span>
-            </div>
+        <div class="equipped-grid" id="equipped-display-grid">
+            <!-- 這裡將由 JavaScript 動態渲染 -->
         </div>
     </section>
 
@@ -215,13 +217,13 @@
 
     <footer class="footer">
         <ul class="notice-list">
-            <li class="notice-item" id="ui-n1">本頁面呈現您的帳號所有徽章</li>
-            <li class="notice-item" id="ui-n2">帳號等級達到 VIP Level 60 可解鎖徽章更換</li>
-            <li class="notice-item" id="ui-n3">每次更換需等約 20 秒，請勿頻繁送出需求</li>
-            <li class="notice-item" id="ui-n4">徽章更換完成，可至直播間查看</li>
-            <li class="notice-item" id="ui-n5">徽章與等級需登入後完整顯示</li>
-            <li class="notice-item" id="ui-n6">資料至少需 10 分鐘更新時間</li>
-            <li class="notice-item notice-alert" id="ui-n7">【重要】為了保護您的帳號，切勿將徽章介面分享給他人，以免造成帳號冒用或徽章損失。</li>
+            <li class="notice-item" id="ui-n1">---</li>
+            <li class="notice-item" id="ui-n2">---</li>
+            <li class="notice-item" id="ui-n3">---</li>
+            <li class="notice-item" id="ui-n4">---</li>
+            <li class="notice-item" id="ui-n5">---</li>
+            <li class="notice-item" id="ui-n6">---</li>
+            <li class="notice-item notice-alert" id="ui-n7">---</li>
         </ul>
     </footer>
 
@@ -289,13 +291,14 @@
             document.getElementById('ui-upgrade').innerText = t.upgrade;
             document.getElementById('lbl-total').innerText = t.total;
             document.getElementById('ui-title').innerText = t.title;
-            // 重要：修正注意事項讀取邏輯
             for(let i=1; i<=7; i++) { document.getElementById(`ui-n${i}`).innerText = t[`n${i}`]; }
             document.getElementById('ui-modal-btn').innerText = t.modal_btn;
         }
 
         async function init(isRefreshOnly = false) {
             const box = document.getElementById('display');
+            const equippedGrid = document.getElementById('equipped-display-grid');
+            
             if(!uid) { box.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:100px;color:#444">Please Login</div>`; return; }
             
             if(!isRefreshOnly) {
@@ -323,28 +326,29 @@
                     }));
                 }
 
+                // 處理帳號顯示徽章 (動態渲染，解決置中問題)
                 if (rawIds.length > 0) {
                     document.getElementById('equipped-area').style.display = 'block';
                     const lastId = rawIds[rawIds.length - 1];
                     const secondLastId = rawIds.length > 1 ? rawIds[rawIds.length - 2] : null;
 
-                    const getTrans = async (id) => {
+                    const fetchName = async (id) => {
                         try {
                             const t = await fetch(`${CFG.trs}?lang=${state.lang}&key=badge_${id}`).then(res => res.json());
                             return t[`badge_${id}`] || id;
                         } catch { return id; }
-                    }
-                    
-                    document.getElementById('eq-img-2').src = CFG.img + lastId + ".svg";
-                    document.getElementById('eq-name-2').innerText = await getTrans(lastId);
-                    
-                    if (secondLastId) {
-                        document.getElementById('eq-box-1').style.visibility = 'visible';
-                        document.getElementById('eq-img-1').src = CFG.img + secondLastId + ".svg";
-                        document.getElementById('eq-name-1').innerText = await getTrans(secondLastId);
-                    } else {
-                        document.getElementById('eq-box-1').style.visibility = 'hidden';
-                    }
+                    };
+
+                    const eqList = [];
+                    if (secondLastId) eqList.push({ id: secondLastId, name: await fetchName(secondLastId) });
+                    eqList.push({ id: lastId, name: await fetchName(lastId) });
+
+                    equippedGrid.innerHTML = eqList.map(item => `
+                        <div class="equipped-box">
+                            <img src="${CFG.img}${item.id}.svg" onerror="this.src='${CFG.img}default.svg'">
+                            <span>${item.name}</span>
+                        </div>
+                    `).join('');
                 }
 
                 if (state.list.length === 0) box.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px;color:#64748b;">${I18N[state.lang].empty}</div>`;

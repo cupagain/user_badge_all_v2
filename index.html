@@ -52,25 +52,21 @@
         .stats-label { color: var(--ice-blue); font-size: 12px; font-weight: 800; text-transform: uppercase; }
         .stats-val { color: #fff; font-size: 22px; font-weight: 900; font-family: var(--font-head); }
 
-        /* 2. 帳號顯示徽章 - 視覺與下方全覽完全對等 */
-        .equipped-section { max-width: 1000px; margin: 0 auto 20px; padding: 0 16px; }
-        .equipped-title { font-size: 12px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; text-align: center; }
-        .equipped-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, minmax(0, 1fr)); 
-            gap: 14px; /* 與全覽網格一致 */
-        }
+        /* 2. 帳號顯示徽章 - 縮短底部距離 */
+        .equipped-section { max-width: 600px; margin: 0 auto 15px; padding: 0 16px; }
+        .equipped-title { font-size: 12px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; text-align: center; }
+        .equipped-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .equipped-box {
-            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 28px;
-            padding: 30px 10px 12px; /* 與全覽卡片一致 */
+            background: rgba(255,255,255,0.02); border: 2px solid var(--glass-border); border-radius: 24px;
+            padding: 15px 10px 10px; /* 縮小底部 padding */
             display: flex; flex-direction: column; align-items: center; text-align: center;
             backdrop-filter: blur(10px); transition: 0.3s;
         }
-        .equipped-box img { width: 75px; height: 75px; margin-bottom: 12px; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6)); }
-        .equipped-box span { font-size: 14px; font-weight: 700; color: #f1f5f9; line-height: 1.4; height: 32px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .equipped-box img { width: 70px; height: 70px; margin-bottom: 10px; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6)); }
+        .equipped-box span { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.2; height: 32px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 
-        /* 3. 身份與權限卡片 */
-        .control-section { max-width: 600px; margin: 0 auto 20px; padding: 0 16px; }
+        /* 3. 身份與權限卡片 - 緊湊縮排 */
+        .control-section { max-width: 600px; margin: 0 auto 15px; padding: 0 16px; }
         .auth-card { 
             background: var(--glass-deep); border: 1px solid var(--glass-border); border-radius: 28px; 
             padding: 18px; backdrop-filter: blur(30px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -92,10 +88,9 @@
             background: linear-gradient(135deg, var(--pink) 0%, #ff5e7e 100%);
             color: #fff; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px;
             text-decoration: none; display: none; box-shadow: 0 4px 10px rgba(244, 63, 94, 0.3);
-            white-space: nowrap;
         }
 
-        /* 4. 徽章網格 */
+        /* 4. 徽章網格 - 縮短名稱底距 */
         .instruction-area { text-align: center; margin-bottom: 15px; min-height: 48px; padding: 0 20px; }
         .hint-label { font-size: 11px; font-weight: 700; color: #94a3b8; display: block; margin-bottom: 4px; text-transform: uppercase; }
         .hint-value { font-size: 16px; font-weight: 800; color: #fff; }
@@ -106,7 +101,7 @@
 
         .badge-item { 
             background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 28px; 
-            padding: 30px 10px 12px; 
+            padding: 30px 10px 12px; /* 縮小底部 padding */
             text-align: center; cursor: pointer; position: relative; transition: 0.4s;
             display: flex; flex-direction: column; align-items: center; height: 100%;
         }
@@ -126,7 +121,7 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* 5. 注意事項修正 */
-        .footer { max-width: 600px; margin: 60px auto 0; padding: 30px 20px 80px; border-top: 1px solid var(--glass-border); }
+        .footer { max-width: 600px; margin: 40px auto 0; padding: 30px 20px 80px; border-top: 1px solid var(--glass-border); }
         .notice-list { list-style: none; padding: 0; }
         .notice-item { font-size: 13px; color: #64748b; font-weight: 600; line-height: 1.8; margin-bottom: 10px; display: flex; gap: 10px; text-align: left; align-items: flex-start; }
         .notice-item::before { content: "•"; color: #64748b; font-weight: 900; font-size: 18px; line-height: 1.2; flex-shrink: 0; margin-top: 3px; }
@@ -159,7 +154,6 @@
         </div>
     </header>
 
-    <!-- 帳號顯示徽章 - 與全覽對齊版本 -->
     <section class="equipped-section" id="equipped-area" style="display: none;">
         <p class="equipped-title" id="lbl-equipped">帳號顯示徽章</p>
         <div class="equipped-grid">
@@ -280,24 +274,31 @@
             document.getElementById('ui-upgrade').innerText = t.upgrade;
             document.getElementById('lbl-total').innerText = t.total;
             document.getElementById('ui-title').innerText = t.title;
+            // 注意事項
             for(let i=1; i<=7; i++) { document.getElementById(`ui-n${i}`).innerText = t[`n${i}`]; }
         }
 
         async function init(isRefreshOnly = false) {
             const box = document.getElementById('display');
             if(!uid) { box.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:100px;color:#444">Please Login</div>`; return; }
+            
+            // 只有第一次加載顯示骨架
             if(!isRefreshOnly) {
                 box.innerHTML = Array(4).fill(0).map(()=>`<div class="badge-item"><div class="badge-img skeleton"></div><div class="skeleton" style="height:14px;width:60%"></div></div>`).join('');
             }
+
             try {
                 const r = await fetch(`${CFG.data}?user_id=${uid}`);
                 const d = await r.json();
+                
                 state.level = d.level;
                 document.getElementById('ui-count').innerText = d.count;
                 document.getElementById('ui-level').innerText = d.level;
                 document.getElementById('ui-username-display').innerText = I18N[state.lang].username + (d.username || "---");
 
                 const rawIds = (d.badges || []).filter(i => i.startsWith('campaign_'));
+                
+                // 只有第一次加載才獲取全覽列表，之後只更新 Equipped
                 if(!isRefreshOnly || state.list.length === 0) {
                     state.list = await Promise.all(rawIds.map(async id => {
                         const k = `badge_${id}`;
@@ -308,18 +309,24 @@
                     }));
                 }
 
+                // 處理帳號顯示徽章 (永遠從 API 回傳的 rawIds 取最後兩個)
                 if (rawIds.length > 0) {
                     document.getElementById('equipped-area').style.display = 'block';
                     const lastId = rawIds[rawIds.length - 1];
                     const secondLastId = rawIds.length > 1 ? rawIds[rawIds.length - 2] : null;
+
                     const getTrans = async (id) => {
                         try {
                             const t = await fetch(`${CFG.trs}?lang=${state.lang}&key=badge_${id}`).then(res => res.json());
                             return t[`badge_${id}`] || id;
                         } catch { return id; }
                     }
+                    
+                    // 最後一個 (右邊)
                     document.getElementById('eq-img-2').src = CFG.img + lastId + ".svg";
                     document.getElementById('eq-name-2').innerText = await getTrans(lastId);
+                    
+                    // 倒數第二個 (左邊)
                     if (secondLastId) {
                         document.getElementById('eq-box-1').style.visibility = 'visible';
                         document.getElementById('eq-img-1').src = CFG.img + secondLastId + ".svg";
@@ -328,6 +335,7 @@
                         document.getElementById('eq-box-1').style.visibility = 'hidden';
                     }
                 }
+
                 if (state.list.length === 0) box.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px;color:#64748b;">${I18N[state.lang].empty}</div>`;
                 else render();
                 check();
@@ -407,8 +415,21 @@
                 if (res.ok) {
                     showModal(t.success);
                     state.selected = null;
+                    // 關鍵：只更新資料，不重新載入列表順序
                     setTimeout(() => init(true), 1000);
                 } else if (res.status === 429) {
                     showModal(t.cooldown);
                 } else {
-                    showModal(`❌:
+                    showModal(`❌: ${d.error || "Denied"}`);
+                }
+            } catch (err) {
+                showModal("❌ 伺服器連線失敗 (Network Error)");
+            } finally {
+                state.isSubmitting = false;
+                render(); check();
+            }
+        }
+        setLang('zh-hant');
+    </script>
+</body>
+</html>

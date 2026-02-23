@@ -396,9 +396,9 @@
                 });
                 const d = await res.json();
                 
-                // 強制處理延時，確保至少顯示 4 秒
+                // 強制處理延時，確保至少顯示 5 秒
                 const elapsed = Date.now() - startTime;
-                if (elapsed < 4000) await new Promise(resolve => setTimeout(resolve, 4000 - elapsed));
+                if (elapsed < 5000) await new Promise(resolve => setTimeout(resolve, 5000 - elapsed));
 
                 if (res.ok) {
                     showModal(t.success);

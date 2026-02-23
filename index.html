@@ -28,7 +28,7 @@
             min-height: 100vh; padding-bottom: 60px; overflow-x: hidden;
         }
 
-        /* 語言切換 */
+        /* 語言切換 (移除 JP) */
         .top-nav { position: absolute; top: 15px; right: 15px; z-index: 100; display: flex; gap: 6px; }
         .lang-btn { background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); color: var(--text-dim); padding: 8px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
         .lang-btn.active { background: #fff; color: #000; border-color: #fff; }
@@ -52,20 +52,20 @@
         .stats-label { color: var(--ice-blue); font-size: 12px; font-weight: 800; text-transform: uppercase; }
         .stats-val { color: #fff; font-size: 22px; font-weight: 900; font-family: var(--font-head); }
 
-        /* 2. 帳號顯示徽章 - 縮短底部距離 */
-        .equipped-section { max-width: 600px; margin: 0 auto 15px; padding: 0 16px; }
-        .equipped-title { font-size: 12px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; text-align: center; }
-        .equipped-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        /* 2. 帳號顯示徽章 */
+        .equipped-section { max-width: 1000px; margin: 0 auto 15px; padding: 0 16px; }
+        .equipped-title { font-size: 12px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; text-align: center; }
+        .equipped-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; justify-content: center; }
         .equipped-box {
-            background: rgba(255,255,255,0.02); border: 2px solid var(--glass-border); border-radius: 24px;
-            padding: 15px 10px 10px; /* 縮小底部 padding */
+            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 28px;
+            padding: 25px 10px 10px; /* 緊湊底部 */
             display: flex; flex-direction: column; align-items: center; text-align: center;
             backdrop-filter: blur(10px); transition: 0.3s;
         }
-        .equipped-box img { width: 70px; height: 70px; margin-bottom: 10px; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6)); }
+        .equipped-box img { width: 75px; height: 75px; margin-bottom: 10px; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6)); }
         .equipped-box span { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.2; height: 32px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 
-        /* 3. 身份與權限卡片 - 緊湊縮排 */
+        /* 3. 身份與權限卡片 */
         .control-section { max-width: 600px; margin: 0 auto 15px; padding: 0 16px; }
         .auth-card { 
             background: var(--glass-deep); border: 1px solid var(--glass-border); border-radius: 28px; 
@@ -88,20 +88,35 @@
             background: linear-gradient(135deg, var(--pink) 0%, #ff5e7e 100%);
             color: #fff; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px;
             text-decoration: none; display: none; box-shadow: 0 4px 10px rgba(244, 63, 94, 0.3);
+            white-space: nowrap;
         }
 
-        /* 4. 徽章網格 - 縮短名稱底距 */
+        /* 4. 徽章網格 - 電腦版置中優化 */
         .instruction-area { text-align: center; margin-bottom: 15px; min-height: 48px; padding: 0 20px; }
         .hint-label { font-size: 11px; font-weight: 700; color: #94a3b8; display: block; margin-bottom: 4px; text-transform: uppercase; }
         .hint-value { font-size: 16px; font-weight: 800; color: #fff; }
         .hint-selected { color: var(--ice-blue); }
 
-        .badge-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 0 16px 30px; max-width: 1000px; margin: 0 auto; }
-        @media (min-width: 768px) { .badge-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); } }
+        .badge-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, minmax(0, 1fr)); 
+            gap: 14px; 
+            padding: 0 16px 30px; 
+            max-width: 1000px; 
+            margin: 0 auto;
+            justify-content: center; /* 網格內容整體置中 */
+        }
+        @media (min-width: 768px) { 
+            .badge-grid { 
+                /* 電腦版：使用 auto-fit 配合固定寬度，達成少數項目時也能置中的效果 */
+                grid-template-columns: repeat(auto-fit, 180px); 
+                justify-content: center;
+            } 
+        }
 
         .badge-item { 
             background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 28px; 
-            padding: 30px 10px 12px; /* 縮小底部 padding */
+            padding: 30px 10px 10px; /* 緊湊底部 */
             text-align: center; cursor: pointer; position: relative; transition: 0.4s;
             display: flex; flex-direction: column; align-items: center; height: 100%;
         }
@@ -120,7 +135,7 @@
         .inline-confirm-btn.submitting { opacity: 0.7; cursor: wait; filter: grayscale(0.5); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 5. 注意事項修正 */
+        /* 5. 注意事項 */
         .footer { max-width: 600px; margin: 40px auto 0; padding: 30px 20px 80px; border-top: 1px solid var(--glass-border); }
         .notice-list { list-style: none; padding: 0; }
         .notice-item { font-size: 13px; color: #64748b; font-weight: 600; line-height: 1.8; margin-bottom: 10px; display: flex; gap: 10px; text-align: left; align-items: flex-start; }
@@ -200,13 +215,13 @@
 
     <footer class="footer">
         <ul class="notice-list">
-            <li class="notice-item" id="ui-n1">---</li>
-            <li class="notice-item" id="ui-n2">---</li>
-            <li class="notice-item" id="ui-n3">---</li>
-            <li class="notice-item" id="ui-n4">---</li>
-            <li class="notice-item" id="ui-n5">---</li>
-            <li class="notice-item" id="ui-n6">---</li>
-            <li class="notice-item notice-alert" id="ui-n7">---</li>
+            <li class="notice-item" id="ui-n1">本頁面呈現您的帳號所有徽章</li>
+            <li class="notice-item" id="ui-n2">帳號等級達到 VIP Level 60 可解鎖徽章更換</li>
+            <li class="notice-item" id="ui-n3">每次更換需等約 20 秒，請勿頻繁送出需求</li>
+            <li class="notice-item" id="ui-n4">徽章更換完成，可至直播間查看</li>
+            <li class="notice-item" id="ui-n5">徽章與等級需登入後完整顯示</li>
+            <li class="notice-item" id="ui-n6">資料至少需 10 分鐘更新時間</li>
+            <li class="notice-item notice-alert" id="ui-n7">【重要】為了保護您的帳號，切勿將徽章介面分享給他人，以免造成帳號冒用或徽章損失。</li>
         </ul>
     </footer>
 
@@ -274,15 +289,15 @@
             document.getElementById('ui-upgrade').innerText = t.upgrade;
             document.getElementById('lbl-total').innerText = t.total;
             document.getElementById('ui-title').innerText = t.title;
-            // 注意事項
+            // 重要：修正注意事項讀取邏輯
             for(let i=1; i<=7; i++) { document.getElementById(`ui-n${i}`).innerText = t[`n${i}`]; }
+            document.getElementById('ui-modal-btn').innerText = t.modal_btn;
         }
 
         async function init(isRefreshOnly = false) {
             const box = document.getElementById('display');
             if(!uid) { box.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:100px;color:#444">Please Login</div>`; return; }
             
-            // 只有第一次加載顯示骨架
             if(!isRefreshOnly) {
                 box.innerHTML = Array(4).fill(0).map(()=>`<div class="badge-item"><div class="badge-img skeleton"></div><div class="skeleton" style="height:14px;width:60%"></div></div>`).join('');
             }
@@ -298,7 +313,6 @@
 
                 const rawIds = (d.badges || []).filter(i => i.startsWith('campaign_'));
                 
-                // 只有第一次加載才獲取全覽列表，之後只更新 Equipped
                 if(!isRefreshOnly || state.list.length === 0) {
                     state.list = await Promise.all(rawIds.map(async id => {
                         const k = `badge_${id}`;
@@ -309,7 +323,6 @@
                     }));
                 }
 
-                // 處理帳號顯示徽章 (永遠從 API 回傳的 rawIds 取最後兩個)
                 if (rawIds.length > 0) {
                     document.getElementById('equipped-area').style.display = 'block';
                     const lastId = rawIds[rawIds.length - 1];
@@ -322,11 +335,9 @@
                         } catch { return id; }
                     }
                     
-                    // 最後一個 (右邊)
                     document.getElementById('eq-img-2').src = CFG.img + lastId + ".svg";
                     document.getElementById('eq-name-2').innerText = await getTrans(lastId);
                     
-                    // 倒數第二個 (左邊)
                     if (secondLastId) {
                         document.getElementById('eq-box-1').style.visibility = 'visible';
                         document.getElementById('eq-img-1').src = CFG.img + secondLastId + ".svg";
@@ -415,7 +426,6 @@
                 if (res.ok) {
                     showModal(t.success);
                     state.selected = null;
-                    // 關鍵：只更新資料，不重新載入列表順序
                     setTimeout(() => init(true), 1000);
                 } else if (res.status === 429) {
                     showModal(t.cooldown);

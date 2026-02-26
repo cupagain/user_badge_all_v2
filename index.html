@@ -3,172 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>SWAG DIAMOND ELITE</title>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
-
+    <title>SWAG DIAMOND PASS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Noto+Sans+TC:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #060608;
-            --teal: #00d2be;
-            --teal-glow: rgba(0, 210, 190, 0.5);
-            --gold: linear-gradient(90deg, #ffe57e, #ffcc00, #ff9500);
-            --card-bg: rgba(255, 255, 255, 0.04);
-            --border: rgba(255, 255, 255, 0.08);
-            --text-main: #FFFFFF;
-            --text-dim: #929292;
+            --bg: #050505;
+            --card: #1a1a1c;
+            --teal: #00e5cf;
+            --teal-glow: rgba(0, 229, 207, 0.5);
+            --gold: #ffcc00;
+            --white: #ffffff;
+            --silver: #e0e0e0;
+            --border: rgba(255, 255, 255, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: var(--text-main); font-family: 'Noto Sans TC', sans-serif; overflow-x: hidden; padding-bottom: 50px; }
+        body { background: var(--bg); color: var(--white); font-family: 'Noto Sans TC', sans-serif; padding: 30px 20px; line-height: 1.4; }
 
-        /* 背景微光 */
-        .glow-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% -15%, rgba(0, 210, 190, 0.18) 0%, transparent 60%);
-            z-index: -1;
-        }
+        /* 標題與備註 */
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { font-size: 30px; font-weight: 900; letter-spacing: -1px; }
+        .month-num { color: var(--teal); font-family: 'Montserrat', sans-serif; font-size: 42px; margin-right: 4px; }
+        .reset-note { font-size: 14px; color: var(--teal); margin-top: 8px; font-weight: 700; opacity: 0.9; }
 
-        /* 標題與月份 */
-        .header { text-align: center; padding: 35px 0 20px; }
-        .header h1 { 
-            font-size: 30px; font-weight: 900; letter-spacing: -1px; 
-            background: linear-gradient(to bottom, #fff 40%, #888);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        /* 領取英雄區 (Hero Section) */
+        .hero {
+            background: linear-gradient(180deg, #252528 0%, #161618 100%);
+            border-radius: 28px; border: 1px solid var(--border);
+            padding: 30px 20px; margin-bottom: 20px; text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
         }
-        
-        .month-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 12px; }
-        .month-box { 
-            background: rgba(0, 210, 190, 0.05); border: 2.5px solid var(--teal); 
-            padding: 5px 18px; border-radius: 12px; color: var(--teal);
-            font-family: 'Montserrat', sans-serif; font-size: 24px; font-weight: 900;
-            box-shadow: 0 0 25px var(--teal-glow);
+        .hero-label { font-size: 16px; color: var(--silver); font-weight: 700; margin-bottom: 12px; }
+        .hero-val { 
+            font-family: 'Montserrat', sans-serif; font-size: 48px; font-weight: 900; 
+            color: var(--white); margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-        .sub-title { font-size: 18px; color: var(--text-dim); font-weight: 700; letter-spacing: 1px; }
+        .hero-val span { color: var(--teal); text-shadow: 0 0 20px var(--teal-glow); }
 
-        /* 數據看板 - 統一視覺邊框 */
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px 25px; }
-        .stat-card {
-            background: rgba(255, 255, 255, 0.03); 
-            border: 2px solid var(--teal); /* 統一边框颜色 */
-            box-shadow: 0 10px 25px var(--teal-glow); /* 統一發光顏色 */
-            border-radius: 24px; padding: 22px 10px;
-            text-align: center; backdrop-filter: blur(20px);
+        /* 主按鈕 CTA */
+        .cta-btn {
+            width: 100%; padding: 20px; border-radius: 20px; border: none;
+            font-size: 20px; font-weight: 900; letter-spacing: 1px; cursor: pointer;
+            margin-bottom: 25px; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .stat-label { font-size: 14px; color: var(--text-dim); font-weight: 700; margin-bottom: 12px; }
-        .stat-value { font-family: 'Montserrat', sans-serif; font-size: 32px; font-weight: 900; color: var(--teal); text-shadow: 0 0 20px var(--teal-glow); display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .stat-unit { font-size: 14px; color: #fff; margin-top: 10px; font-family: 'Noto Sans TC'; font-weight: 700; }
+        .btn-active { background: var(--teal); color: #000; box-shadow: 0 8px 25px var(--teal-glow); }
+        .btn-active:active { transform: scale(0.96); }
+        .btn-disabled { background: #333; color: #777; cursor: not-allowed; }
 
-        /* VIP 升級看板 */
-        .vip-panel {
-            margin: 0 20px 25px; padding: 18px 22px;
-            background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
-            border-radius: 24px; border: 1px solid var(--border);
+        /* 統計數據區 */
+        .stats { display: flex; gap: 12px; }
+        .stat-box { 
+            flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border); 
+            border-radius: 16px; padding: 15px 10px; text-align: center;
+        }
+        .stat-label { font-size: 13px; color: var(--silver); margin-bottom: 6px; font-weight: 700; }
+        .stat-val { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; color: var(--white); }
+
+        /* VIP 面板 */
+        .vip-card {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+            border-radius: 16px; padding: 15px 20px; margin-bottom: 40px;
             display: flex; justify-content: space-between; align-items: center;
         }
-        .vip-info h3 { font-family: 'Montserrat', sans-serif; font-size: 18px; color: #ffcc00; margin-bottom: 4px; }
-        .vip-badge { font-size: 12px; font-weight: 900; padding: 3px 10px; border-radius: 6px; border: 1px solid transparent; }
-        .tag-ok { background: rgba(0, 255, 128, 0.1); color: #00ff80; border-color: rgba(0, 255, 128, 0.3); }
-        .tag-no { background: rgba(255, 62, 96, 0.1); color: #ff3e60; border-color: rgba(255, 62, 96, 0.3); }
+        .vip-lv { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 900; color: var(--gold); }
+        .vip-status { font-size: 14px; font-weight: 700; }
+        .status-ok { color: #00ff80; }
+        .status-no { color: #ff3e60; text-decoration: underline; cursor: pointer; }
+
+        /* 規則清單區 (5 Columns Grid) */
+        .rules-header { font-size: 20px; font-weight: 900; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .rules-header::before { content: ''; width: 6px; height: 24px; background: var(--teal); border-radius: 4px; }
         
-        /* 升級按鈕炫光 */
-        .upgrade-btn {
-            background: var(--gold); border: none; color: #000;
-            padding: 12px 20px; border-radius: 14px; font-weight: 900; font-size: 14px;
-            position: relative; overflow: hidden; box-shadow: 0 5px 20px rgba(255, 204, 0, 0.4);
+        .rules-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+        .rule-cell {
+            background: var(--card); border: 1.5px solid var(--border);
+            border-radius: 12px; padding: 12px 2px; text-align: center;
+            transition: 0.3s;
         }
-        .upgrade-btn::after {
-            content: ''; position: absolute; top: -50%; left: -150%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.5), transparent);
-            transform: rotate(45deg); animation: swipe 3s infinite;
-        }
-        @keyframes swipe { 0% { left: -150%; } 100% { left: 150%; } }
-
-        /* 獎勵網格 */
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 20px; }
-        .item {
-            background: var(--card-bg); border: 1px solid var(--border); border-radius: 22px;
-            padding: 22px 10px; text-align: center; transition: 0.3s; position: relative;
-        }
-        .item.today { border-color: var(--teal); background: rgba(0, 210, 190, 0.05); transform: scale(1.03); box-shadow: 0 0 25px rgba(0, 210, 190, 0.2); }
+        .rule-cell.claimed { opacity: 0.25; background: #000; }
+        .rule-cell.active { border-color: var(--teal); background: rgba(0, 229, 207, 0.08); box-shadow: 0 0 15px rgba(0, 229, 207, 0.15); }
         
-        .label { font-size: 13px; font-weight: 800; margin-bottom: 12px; display: block; color: var(--text-dim); }
-        .label.today-lbl { color: var(--teal); font-weight: 900; }
-        .label.tmr-lbl { background: rgba(255,255,255,0.1); padding: 1px 8px; border-radius: 6px; color: #fff; display: inline-block; }
+        .r-day { font-size: 11px; font-weight: 700; color: var(--silver); margin-bottom: 8px; display: block; }
+        .r-amt-row { display: flex; align-items: center; justify-content: center; gap: 2px; }
+        .r-icon { width: 14px; height: 14px; filter: drop-shadow(0 0 4px var(--teal-glow)); }
+        .r-amt { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 800; color: var(--white); }
 
-        /* 鑽石 SVG */
-        .dia-svg {
-            width: 50px; height: 50px; margin: 0 auto 12px; display: block;
-            filter: drop-shadow(0 0 12px var(--teal-glow));
-        }
-        .dia-svg path { fill: var(--teal); }
-
-        .amt { font-family: 'Montserrat', sans-serif; font-size: 26px; font-weight: 900; color: #fff; margin-bottom: 18px; display: block; }
-
-        /* CTA */
-        .cta {
-            width: 100%; border: none; padding: 10px 0; border-radius: 12px;
-            font-size: 11px; font-weight: 900; text-transform: uppercase;
-        }
-        .btn-get { background: var(--teal); color: #000; font-weight: 900; box-shadow: 0 5px 15px var(--teal-glow); animation: breathe 2s infinite; }
-        .btn-off { background: rgba(255,255,255,0.08); color: var(--text-dim); }
-        .btn-lock { background: #1a1a1c; color: #444; border: 1px solid #333; }
-
-        @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.97); opacity: 0.9; } }
-        .skeleton { height: 160px; background: rgba(255,255,255,0.05); border-radius: 22px; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.8; } }
+        /* Skeleton */
+        .skeleton { height: 70px; background: #222; border-radius: 12px; animation: breathe 1.5s infinite; }
+        @keyframes breathe { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.8; } }
     </style>
 </head>
 <body>
 
-<div class="glow-overlay"></div>
-
 <div class="header">
-    <h1 id="t-main">登入領鑽石獎勵</h1>
-    <div class="month-row">
-        <div class="month-box" id="v-month">--</div>
-        <div class="sub-title" id="t-sub">月連續簽到獎勵</div>
-    </div>
+    <h1><span class="month-num" id="month-text">--</span>月連續簽到獎勵</h1>
+    <p class="reset-note">天數於每月 1 日更新</p>
 </div>
 
-<div class="stats-grid">
-    <div class="stat-card">
-        <div class="stat-label" id="l-days">本月已領取</div>
-        <div class="stat-value"><span id="v-days">--</span><span class="stat-unit" id="u-days">天</span></div>
+<div class="hero">
+    <p class="hero-label">本日可領取</p>
+    <div class="hero-val">
+        <svg style="width:40px;height:40px;margin-right:8px" viewBox="0 0 24 24"><path fill="#00e5cf" d="M12 22L2 9L12 2L22 9L12 22Z"/></svg>
+        <span id="today-val">--</span>
     </div>
-    <div class="stat-card">
-        <div class="stat-label" id="l-total">總計已領取</div>
-        <div class="stat-value">
-            <svg style="width:26px; height:26px; margin-right:4px;" viewBox="0 0 24 24"><path fill="#00d2be" d="M12 22L2 9L12 2L22 9L12 22Z" /></svg>
-            <span id="v-diamonds">--</span>
+    
+    <button id="cta-btn" class="cta-btn btn-disabled">連線中...</button>
+
+    <div class="stats">
+        <div class="stat-box">
+            <p class="stat-label">本月已領取</p>
+            <p class="stat-val"><span id="days-val">--</span> 天</p>
+        </div>
+        <div class="stat-box">
+            <p class="stat-label">總計已領取</p>
+            <p class="stat-val"><span id="diamonds-val">--</span> 鑽</p>
         </div>
     </div>
 </div>
 
-<div class="vip-panel">
-    <div class="vip-info">
-        <h3 id="v-vip-lv">VIP LV. --</h3>
-        <div id="v-vip-tag" class="vip-badge">...</div>
-    </div>
-    <button class="upgrade-btn" id="v-upgrade-btn" style="display:none">立即升級</button>
+<div class="vip-card">
+    <div class="vip-lv" id="vip-lv">VIP LV.--</div>
+    <div class="vip-status" id="vip-status">檢查資格中...</div>
 </div>
 
-<div class="grid" id="reward-grid">
-    <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+<div class="rules-header">全月獎勵規則</div>
+<div class="rules-grid" id="grid">
+    <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
 </div>
-
-<!-- 鑽石 SVG 模板 -->
-<svg style="display:none">
-    <symbol id="dia-icon" viewBox="0 0 24 24">
-        <path d="M12 22L2 9L12 2L22 9L12 22Z" fill="#00d2be" />
-        <path d="M12 2L2 9L12 12L22 9L12 2Z" fill="white" opacity="0.45" />
-        <path d="M12 22L7 9L12 12L17 9L12 22Z" fill="black" opacity="0.15" />
-    </symbol>
-</svg>
 
 <script>
-    // 配置：請填寫您的 API URL
+    // 配置：您的 Cloud Run API URL
     const API_URL = "https://swag-user-login-api-905468082258.asia-east1.run.app/api/user_login_status";
 
     const REWARDS = [
@@ -177,93 +141,83 @@
         90, 90, 150, 90, 300
     ];
 
-    const TXT = {
-        l_days: "本月已領取", l_total: "總計已領取", days: "天",
-        v_ok: "符合資格", v_no: "不符合資格", up: "立即升級",
-        get: "簽到領鑽", today: "TODAY", tmr: "TOMORROW", done: "已領取", day: "DAY"
-    };
-
-    let user = { total_checkin_days: 0, vip_level: 0 };
-
-    async function init() {
-        const uid = new URLSearchParams(window.location.search).get('user_id') || 'test_user';
+    async function fetchData() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('user_id') || 'test_user';
+        let data = { total_checkin_days: 0, vip_level: 0 };
+        
         try {
-            const res = await fetch(`${API_URL}?user_id=${uid}`);
-            user = await res.json();
-        } catch (e) { console.error(e); }
-        updateUI();
+            const response = await fetch(`${API_URL}?user_id=${userId}`);
+            data = await response.json();
+        } catch (e) { console.error("API Error", e); }
+        
+        renderUI(data);
     }
 
-    function updateUI() {
-        // 月份
-        const m = user.current_month ? new Date(user.current_month).getMonth() + 1 : new Date().getMonth() + 1;
-        document.getElementById('v-month').innerText = m.toString().padStart(2, '0');
+    function renderUI(data) {
+        const claimedDays = data.total_checkin_days || 0;
+        const vipLevel = data.vip_level || 0;
+        const isQualified = vipLevel >= 10;
+        const currentMonth = data.current_month ? new Date(data.current_month).getMonth() + 1 : new Date().getMonth() + 1;
 
-        // VIP
-        const lv = user.vip_level || 0;
-        const isOk = lv >= 10;
-        document.getElementById('v-vip-lv').innerText = `VIP LV. ${lv}`;
-        const b = document.getElementById('v-vip-tag');
-        b.innerText = isOk ? TXT.v_ok : TXT.v_no;
-        b.className = `vip-badge ${isOk ? 'tag-ok' : 'tag-no'}`;
-        document.getElementById('v-upgrade-btn').style.display = isOk ? 'none' : 'block';
-        document.getElementById('v-upgrade-btn').innerText = TXT.up;
+        // 標題與月份
+        document.getElementById('month-text').innerText = currentMonth;
+
+        // 本日領取數
+        const todayReward = REWARDS[claimedDays] || 0;
+        document.getElementById('today-val').innerText = todayReward;
 
         // 統計看板
-        const claimed = user.total_checkin_days || 0;
-        document.getElementById('v-days').innerText = claimed;
-        let sum = 0;
-        for(let i=0; i<claimed; i++) sum += REWARDS[i];
-        document.getElementById('v-diamonds').innerText = sum;
+        document.getElementById('days-val').innerText = claimedDays;
+        let totalClaimed = 0;
+        for(let i=0; i<claimedDays; i++) totalClaimed += REWARDS[i];
+        document.getElementById('diamonds-val').innerText = totalClaimed;
 
-        renderGrid(claimed, isOk);
-    }
+        // VIP 狀態
+        document.getElementById('vip-lv').innerText = `VIP LV.${vipLevel}`;
+        const statusEl = document.getElementById('vip-status');
+        if (isQualified) {
+            statusEl.innerHTML = `<span class="status-ok">符合資格</span>`;
+        } else {
+            statusEl.innerHTML = `<span class="status-no" onclick="location.href='#upgrade'">不符合資格，立即升級</span>`;
+        }
 
-    function renderGrid(claimed, isOk) {
-        const grid = document.getElementById('reward-grid');
+        // CTA 按鈕邏輯
+        const cta = document.getElementById('cta-btn');
+        if (!isQualified) {
+            cta.innerText = "需 VIP 10 級方可領取";
+            cta.className = "cta-btn btn-disabled";
+        } else if (claimedDays >= 25) {
+            cta.innerText = "本月獎勵已領完";
+            cta.className = "cta-btn btn-disabled";
+        } else {
+            cta.innerText = "簽到領取本日鑽石";
+            cta.className = "cta-btn btn-active";
+            cta.onclick = () => alert("已領取鑽石！"); // 此處可對接領取 API
+        }
+
+        // 渲染 5 欄網格
+        const grid = document.getElementById('grid');
         grid.innerHTML = '';
-
-        REWARDS.forEach((amt, i) => {
-            const d = i + 1;
-            const item = document.createElement('div');
+        REWARDS.forEach((amt, index) => {
+            const dayNum = index + 1;
+            const cell = document.createElement('div');
+            cell.className = 'rule-cell';
+            if (dayNum <= claimedDays) cell.classList.add('claimed');
+            if (dayNum === claimedDays + 1) cell.classList.add('active');
             
-            let lClass = 'label';
-            let lText = `${TXT.day} ${d}`;
-            
-            // 標籤判定
-            if (d === claimed + 1) {
-                item.className = 'item today';
-                lClass = 'label today-lbl';
-                lText = TXT.today;
-            } else if (d === claimed + 2) {
-                item.className = 'item';
-                lClass = 'label tmr-lbl';
-                lText = TXT.tmr;
-            } else {
-                item.className = 'item';
-            }
-            
-            let btn = '';
-            if (d <= claimed) {
-                btn = `<button class="cta btn-off">${TXT.done}</button>`;
-            } else if (d === claimed + 1) {
-                btn = isOk ? `<button class="cta btn-get">${TXT.get}</button>` 
-                           : `<button class="cta btn-lock">VIP 10+ 資格</button>`;
-            } else {
-                btn = `<div style="height:31px"></div>`;
-            }
-
-            item.innerHTML = `
-                <span class="${lClass}">${lText}</span>
-                <svg class="dia-svg"><use xlink:href="#dia-icon"></use></svg>
-                <span class="amt">${amt}</span>
-                ${btn}
+            cell.innerHTML = `
+                <span class="r-day">${dayNum}天</span>
+                <div class="r-amt-row">
+                    <svg class="r-icon" viewBox="0 0 24 24"><path fill="#00e5cf" d="M12 22L2 9L12 2L22 9L12 22Z"/></svg>
+                    <span class="r-amt">${amt}</span>
+                </div>
             `;
-            grid.appendChild(item);
+            grid.appendChild(cell);
         });
     }
 
-    init();
+    fetchData();
 </script>
 
 </body>

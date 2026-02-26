@@ -22,35 +22,46 @@
         body { background: var(--bg); color: var(--white); font-family: 'Inter', 'Noto Sans TC', sans-serif; padding: 15px 20px 80px; line-height: 1.4; }
 
         /* 右上角極簡語系切換 */
-        .lang-switch { position: absolute; top: 15px; right: 15px; display: flex; gap: 6px; z-index: 10; }
-        .lang-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--border); color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
+        .lang-switch { position: absolute; top: 15px; right: 15px; display: flex; gap: 5px; z-index: 100; }
+        .lang-btn { background: rgba(255,255,255,0.08); border: 1px solid var(--border); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; }
+        .lang-btn.active { background: var(--teal); color: #000; border-color: var(--teal); }
 
         /* 標題與重置備註 */
-        .header { text-align: center; margin-bottom: 25px; padding-top: 10px; }
+        .header { text-align: center; margin-bottom: 30px; padding-top: 10px; }
         .header h1 { font-size: 32px; font-weight: 900; letter-spacing: -1px; }
         .m-num { color: var(--teal); font-family: 'Montserrat', sans-serif; font-size: 52px; margin-right: 6px; }
         .reset-note { font-size: 16px; color: var(--info-gold); margin-top: 8px; font-weight: 700; }
 
-        /* 領取英雄區 (Hero Card) */
+        /* 英雄領取區 (Hero Card) */
         .hero-card {
             background: linear-gradient(180deg, #222224 0%, #0d0d0f 100%);
             border-radius: 35px; border: 1.5px solid var(--border);
-            padding: 30px 25px; margin-bottom: 20px; text-align: center;
+            padding: 35px 25px; margin-bottom: 25px; text-align: center;
             box-shadow: 0 20px 50px rgba(0,0,0,0.8);
         }
+
+        /* 絕對置中對齊區 */
+        .hero-val-wrapper {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            margin-top: -5px; margin-bottom: 5px; height: 80px;
+        }
+        .dia-3d { width: 68px; height: 68px; filter: drop-shadow(0 0 20px var(--teal-glow)); }
         .hero-val { 
             font-family: 'Montserrat', sans-serif; font-size: 72px; font-weight: 900; 
-            color: var(--white); display: flex; align-items: center; justify-content: center; gap: 15px;
-            margin-top: -10px; /* 縮短上方距離 */
+            color: var(--white); line-height: 1; /* 確保字體不產生多餘空白 */
         }
         .hero-val span { color: var(--teal); text-shadow: 0 0 35px var(--teal-glow); }
-        .tip-text { font-size: 15px; color: var(--info-gold); font-weight: 700; margin: 8px 0 25px; }
 
-        .tomorrow-hint {
-            background: rgba(0, 229, 207, 0.1); border: 1px dashed var(--teal);
-            padding: 12px; border-radius: 15px; margin-bottom: 25px;
-            color: var(--teal); font-weight: 900; font-size: 16px;
+        .tip-text { font-size: 15px; color: var(--info-gold); font-weight: 700; margin: 10px 0 25px; }
+
+        /* 明日預告橫條 (非 CTA 樣式) */
+        .tomorrow-banner {
+            background: rgba(255, 255, 255, 0.05); border-radius: 12px;
+            padding: 10px; margin-top: -15px; margin-bottom: 30px;
+            font-size: 16px; font-weight: 700; color: var(--teal);
+            display: flex; align-items: center; justify-content: center; gap: 6px;
         }
+        .tomorrow-banner b { font-family: 'Montserrat'; font-size: 20px; }
 
         /* 按鈕系統 */
         .btn {
@@ -70,62 +81,62 @@
             background: rgba(255,255,255,0.4); transform: rotate(30deg); animation: shine 3s infinite;
         }
         @keyframes shine { 0% { left: -100%; } 100% { left: 200%; } }
-        .btn-locked { background: #2a2a2c; color: #777; cursor: not-allowed; }
+        .btn-status { background: rgba(255,255,255,0.08); color: #777; cursor: default; }
 
         /* 累計看板 */
         .stats { display: flex; gap: 12px; }
         .stat-card { 
             flex: 1; background: rgba(0, 229, 207, 0.03); border: 2px solid var(--teal); 
-            border-radius: 20px; padding: 18px 10px; text-align: center;
+            border-radius: 20px; padding: 20px 10px; text-align: center;
         }
-        .stat-lbl { font-size: 14px; color: var(--silver); margin-bottom: 10px; font-weight: 700; }
-        .stat-val { font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 900; color: #fff; }
+        .stat-lbl { font-size: 14px; color: var(--info-gold); margin-bottom: 10px; font-weight: 700; }
+        .stat-val { font-family: 'Montserrat', sans-serif; font-size: 30px; font-weight: 900; color: #fff; }
 
         /* VIP Bar */
         .vip-bar {
             background: rgba(255,255,255,0.03); border-radius: 20px; 
-            padding: 18px 22px; margin-bottom: 45px; border: 1px solid var(--border);
+            padding: 20px 25px; margin-bottom: 45px; border: 1px solid var(--border);
             display: flex; justify-content: space-between; align-items: center;
         }
         .vip-lv-txt { font-size: 17px; font-weight: 700; color: #fff; }
-        .vip-lv-num { font-family: 'Montserrat', sans-serif; font-weight: 900; color: #ffcc00; font-size: 20px; }
         .vip-status { font-size: 15px; font-weight: 900; padding: 4px 12px; border-radius: 8px; }
         .q-ok { color: #00ff8b; background: rgba(0,255,139,0.1); }
         .q-no { color: #ff3e60; background: rgba(255,62,96,0.1); }
 
-        /* 規則網格 - 字體放大 */
+        /* 規則網格 - 增加字體大小與鑽石圖示 */
         .rules-title { font-size: 24px; font-weight: 900; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
         .rules-title::before { content: ''; width: 6px; height: 26px; background: var(--teal); border-radius: 3px; }
         
         .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 50px; }
         .day-cell {
             background: var(--card-gray); border: 1px solid var(--border);
-            border-radius: 15px; padding: 16px 2px; text-align: center;
+            border-radius: 15px; padding: 18px 2px; text-align: center;
+            transition: 0.3s;
         }
         .day-cell.claimed { opacity: 0.2; filter: grayscale(1); }
         .day-cell.active { border-color: var(--teal); background: rgba(0, 229, 207, 0.1); }
         
-        .c-day { font-size: 14px; font-weight: 800; color: var(--silver); margin-bottom: 10px; display: block; }
+        .c-day { font-size: 14px; font-weight: 800; color: var(--info-gold); margin-bottom: 12px; display: block; }
         .c-amt-row { display: flex; align-items: center; justify-content: center; gap: 4px; }
-        .c-amt { font-family: 'Montserrat', sans-serif; font-size: 17px; font-weight: 900; color: #fff; }
+        .c-amt { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 900; color: #fff; }
         .dia-sm { width: 14px; height: 14px; }
 
         /* 注意事項 */
         .notes {
             background: rgba(255,255,255,0.02); border-radius: 25px; padding: 30px;
-            font-size: 15px; color: var(--silver); line-height: 2;
+            font-size: 15px; color: #d1d1d6; line-height: 2;
         }
-        .notes h4 { color: #fff; font-size: 19px; margin-bottom: 12px; font-weight: 900; }
+        .notes h4 { color: #fff; font-size: 20px; margin-bottom: 15px; font-weight: 900; }
         .notes ol { padding-left: 22px; }
 
-        /* 扁平五角鑽石 SVG */
-        .dia-3d { width: 66px; height: 66px; filter: drop-shadow(0 0 20px var(--teal-glow)); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div class="lang-switch">
-    <button class="lang-btn" onclick="toggleLang()" id="lang-btn">English</button>
+    <button class="lang-btn active" id="btn-zh" onclick="switchLang('zh-TW')">繁</button>
+    <button class="lang-btn" id="btn-en" onclick="switchLang('en')">EN</button>
 </div>
 
 <div class="header">
@@ -134,7 +145,7 @@
 </div>
 
 <div class="hero-card">
-    <div class="hero-val">
+    <div class="hero-val-wrapper">
         <svg class="dia-3d" viewBox="0 0 100 100">
             <defs>
                 <linearGradient id="pentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -142,22 +153,23 @@
                     <stop offset="100%" style="stop-color:#00e5cf;stop-opacity:1" />
                 </linearGradient>
             </defs>
-            <!-- 扁平五角形路徑 (Flat Top Pentagon) -->
-            <path d="M20 30 L80 30 L100 60 L50 95 L0 60 Z" fill="url(#pentGrad)"/>
-            <path d="M20 30 L80 30 L50 60 Z" fill="white" opacity="0.3"/>
-            <path d="M0 60 L20 30 L50 60 L50 95 Z" fill="black" opacity="0.1"/>
-            <path d="M100 60 L80 30 L50 60 L50 95 Z" fill="white" opacity="0.1"/>
+            <!-- 扁平五角形 (Flat Top Pentagon) -->
+            <path d="M25 30 L75 30 L100 65 L50 95 L0 65 Z" fill="url(#pentGrad)"/>
+            <path d="M25 30 L75 30 L50 65 Z" fill="white" opacity="0.3"/>
+            <path d="M0 65 L25 30 L50 65 L50 95 Z" fill="black" opacity="0.1"/>
+            <path d="M100 65 L75 30 L50 65 L50 95 Z" fill="white" opacity="0.1"/>
         </svg>
-        <span id="v-today">--</span>
+        <div class="hero-val"><span id="v-today">--</span></div>
     </div>
     <p class="tip-text" id="t-tip">鑽石計算包含原登入獎勵 20 鑽</p>
     
-    <div id="tomorrow-box" class="tomorrow-hint" style="display: none;">
-        <span id="t-tmr-lbl">明日可領取：</span><span id="v-tomorrow">--</span> 鑽
+    <div id="cta-container">
+        <!-- CTA 容器 -->
     </div>
 
-    <div id="cta-container">
-        <!-- CTA 動態載入 -->
+    <!-- 明日預告橫條 -->
+    <div id="tomorrow-box" class="tomorrow-banner" style="display: none;">
+        <span id="t-tmr-lbl">明日可領取：</span><b id="v-tomorrow">--</b> 鑽
     </div>
 
     <div class="stats">
@@ -173,7 +185,7 @@
 </div>
 
 <div class="vip-bar">
-    <div class="vip-lv-txt"><span id="t-vip-pre">您的 VIP 等級：</span><span class="vip-lv-num" id="v-vip-lv">--</span></div>
+    <div class="vip-lv-txt"><span id="t-vip-pre">您的 VIP 等級：</span><b style="color:#ffcc00;font-family:Montserrat" id="v-vip-lv">--</b></div>
     <div class="vip-status" id="v-vip-st">...</div>
 </div>
 
@@ -185,11 +197,11 @@
     <ol id="t-note-list"></ol>
 </div>
 
-<!-- 鑽石小圖示 -->
+<!-- 鑽石小圖示模板 -->
 <svg style="display: none;">
     <symbol id="icon-dia" viewBox="0 0 100 100">
-        <path d="M20 30 L80 30 L100 60 L50 95 L0 60 Z" fill="#00e5cf"/>
-        <path d="M20 30 L80 30 L50 60 Z" fill="white" opacity="0.4"/>
+        <path d="M25 30 L75 30 L100 65 L50 95 L0 65 Z" fill="#00e5cf"/>
+        <path d="M25 30 L75 30 L50 65 Z" fill="white" opacity="0.4"/>
     </symbol>
 </svg>
 
@@ -214,10 +226,10 @@
                 "額外贈送鑽石將於領取完登入獎勵 20 鑽後十分鐘內發送至您的帳戶。"
             ],
             btn_claim: "簽到領取本日鑽石", btn_up: "立即升級至 VIP Lv.10", btn_done: "本日已領取完畢", btn_wait: "領取時間未到",
-            q_ok: "符合資格", q_no: "資格不符"
+            q_ok: "符合資格", q_no: "資格不符", day_u: "天"
         },
         'en': {
-            suffix: " MONTH PASS", reset: "Check-in days reset on 1st of each month", tip: "Includes base reward of 20 Diamonds",
+            suffix: " MONTH PASS", reset: "Days reset on 1st of each month", tip: "Includes base reward of 20 Diamonds",
             tmr: "Tomorrow's Reward: ", days_l: "Total Days Claimed", total_l: "Total Diamonds Earned", u_day: "Days", u_dia: "Dia",
             vip_pre: "Your VIP Level: ", rules_t: "Monthly Rewards", note_h: "Notes:",
             notes: [
@@ -226,16 +238,17 @@
                 "Bonus diamonds will be sent within 10 mins after claiming."
             ],
             btn_claim: "CLAIM TODAY'S REWARD", btn_up: "UPGRADE TO VIP Lv.10", btn_done: "CLAIMED TODAY", btn_wait: "REWARD NOT READY",
-            q_ok: "QUALIFIED", q_no: "INELIGIBLE"
+            q_ok: "QUALIFIED", q_no: "INELIGIBLE", day_u: "Day"
         }
     };
 
     let currentLang = 'zh-TW';
     let dataCache = null;
 
-    function toggleLang() {
-        currentLang = currentLang === 'zh-TW' ? 'en' : 'zh-TW';
-        document.getElementById('lang-btn').innerText = currentLang === 'zh-TW' ? '繁體中文' : 'English';
+    function switchLang(l) {
+        currentLang = l;
+        document.getElementById('btn-zh').classList.toggle('active', l==='zh-TW');
+        document.getElementById('btn-en').classList.toggle('active', l==='en');
         if (dataCache) updateUI(dataCache);
     }
 
@@ -256,22 +269,26 @@
         const lastTsStr = data.last_check_timestamp;
         
         const now = new Date();
-        let lastTs = lastTsStr ? new Date(lastTsStr) : null;
+        const lastTs = lastTsStr ? new Date(lastTsStr) : null;
         
-        // 邏輯判斷
+        // 邏輯判定
+        // 1. 本日已領：UTC 日期相同
         const isTodayClaimed = lastTs && lastTs.getUTCDate() === now.getUTCDate() && lastTs.getUTCMonth() === now.getUTCMonth();
+        // 2. 領取時間未到：距離上次領取小於 24 小時
         const hoursDiff = lastTs ? (now - lastTs) / (1000 * 60 * 60) : 999;
-        const canClaim = hoursDiff >= 24 && !isTodayClaimed;
+        const canClaim = !isTodayClaimed && hoursDiff >= 24;
 
-        // 更新頂部
+        // 更新 Header
         const m = data.current_month ? new Date(data.current_month).getMonth() + 1 : new Date().getMonth() + 1;
         document.getElementById('m-val').innerText = m;
         document.getElementById('t-m-suffix').innerText = t.suffix;
         document.getElementById('t-reset').innerText = t.reset;
 
-        // Hero 數值
+        // Hero 數值 (顯示下一位可領取的鑽石)
         document.getElementById('v-today').innerText = REWARDS[claimedCount] || REWARDS[24];
         document.getElementById('t-tip').innerText = t.tip;
+        
+        // 看板
         document.getElementById('v-days').innerText = claimedCount;
         document.getElementById('v-total').innerText = REWARDS.slice(0, claimedCount).reduce((a, b) => a + b, 0);
         document.getElementById('t-days-lbl').innerText = t.days_l;
@@ -279,26 +296,26 @@
         document.getElementById('u-day').innerText = t.u_day;
         document.getElementById('u-dia').innerText = t.u_dia;
 
-        // CTA 容器邏輯
+        // CTA 邏輯
         const ctaWrap = document.getElementById('cta-container');
         const tmrBox = document.getElementById('tomorrow-box');
         ctaWrap.innerHTML = '';
+        tmrBox.style.display = 'none';
 
         if (!isQualified) {
             ctaWrap.innerHTML = `<a href="https://swag.live/vip" class="btn btn-gold">${t.btn_up}</a>`;
-            tmrBox.style.display = 'none';
         } else {
             if (isTodayClaimed) {
-                ctaWrap.innerHTML = `<div class="btn btn-locked">${t.btn_done}</div>`;
-                tmrBox.style.display = 'block';
-                document.getElementById('t-tmr-lbl').innerText = t.tmr;
-                document.getElementById('v-tomorrow').innerText = REWARDS[claimedCount] || '--';
-            } else if (!canClaim) {
-                ctaWrap.innerHTML = `<div class="btn btn-locked">${t.btn_wait}</div>`;
-                tmrBox.style.display = 'none';
+                ctaWrap.innerHTML = `<div class="btn btn-status">${t.btn_done}</div>`;
+                if (claimedCount < 25) {
+                    tmrBox.style.display = 'flex';
+                    document.getElementById('t-tmr-lbl').innerText = t.tmr;
+                    document.getElementById('v-tomorrow').innerText = REWARDS[claimedCount] || '--';
+                }
+            } else if (!canClaim && lastTs) {
+                ctaWrap.innerHTML = `<div class="btn btn-status">${t.btn_wait}</div>`;
             } else {
                 ctaWrap.innerHTML = `<a href="${CLAIM_URL}" class="btn btn-teal">${t.btn_claim}</a>`;
-                tmrBox.style.display = 'none';
             }
         }
 
@@ -309,7 +326,7 @@
         st.innerText = isQualified ? t.q_ok : t.q_no;
         st.className = `vip-status ${isQualified ? 'q-ok' : 'q-no'}`;
 
-        // Rules Grid
+        // 規則網格 (5x5)
         document.getElementById('t-rules-t').innerText = t.rules_t;
         const grid = document.getElementById('grid');
         grid.innerHTML = '';
@@ -318,16 +335,16 @@
             const cell = document.createElement('div');
             cell.className = `day-cell ${d <= claimedCount ? 'claimed' : ''} ${d === claimedCount + 1 ? 'active' : ''}`;
             cell.innerHTML = `
-                <span class="c-day">${d}${currentLang === 'zh-TW' ? '天' : 'D'}</span>
+                <span class="c-day">${d}${t.day_u}</span>
                 <div class="c-amt-row">
-                    <svg class="dia-sm" viewBox="0 0 100 100"><use xlink:href="#icon-dia"></use></svg>
+                    <svg class="dia-sm"><use xlink:href="#icon-dia"></use></svg>
                     <span class="c-amt">${amt}</span>
                 </div>
             `;
             grid.appendChild(cell);
         });
 
-        // Notes
+        // 注意事項
         document.getElementById('t-note-h').innerText = t.note_h;
         document.getElementById('t-note-list').innerHTML = t.notes.map(n => `<li>${n}</li>`).join('');
     }
